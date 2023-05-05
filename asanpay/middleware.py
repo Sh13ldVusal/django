@@ -2,10 +2,9 @@ from django.conf import settings
 from django.utils import timezone
 from django.http import Http404
 from django.middleware.csrf import CsrfViewMiddleware
-
 class DisableCSRFMiddleware(CsrfViewMiddleware):
     def process_view(self, request, callback, callback_args, callback_kwargs):
-        if request.path.startswith('/admin/'):
+        if request.path.startswith('admin/'):
             return None
         return super().process_view(request, callback, callback_args, callback_kwargs)
 class VisitCountMiddleware:
