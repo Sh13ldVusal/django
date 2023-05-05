@@ -259,6 +259,7 @@ def dsecazericard(request):
 
 def page_not_found(request, exception):
     return render(request, 'pages/404.html', status=404)
+
 @ensure_csrf_cookie  
 def dseckapital(request):
     if request.method == "POST":
