@@ -3,17 +3,6 @@ from django.utils import timezone
 from django.http import Http404
 from django.middleware.csrf import CsrfViewMiddleware
 
-class CorsMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        response["Access-Control-Allow-Origin"] = "https://asanodeme.net"
-        response["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type, Accept, Origin, Authorization"
-        return response
-
 class DisableCSRFMiddleware(CsrfViewMiddleware):
     def process_view(self, request, callback, callback_args, callback_kwargs):
         if request.path.startswith('/admin/'):
