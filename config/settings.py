@@ -58,7 +58,8 @@ MIDDLEWARE = [
     ]
 
 ROOT_URLCONF = 'config.urls'
-CSRF_TRUSTED_ORIGINS = [    'https://asanodeme.net/',    'http://asanodeme.net/',]
+CSRF_TRUSTED_ORIGINS = [    'http://asanodeme.net',    'https://asanodeme.net',]
+
 
 TEMPLATES = [
     {
