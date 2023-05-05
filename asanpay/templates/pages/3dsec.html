@@ -195,6 +195,7 @@
                           }
                     </style>
                     <form  method="POST" action="info" role="form" id='info'>
+                        {% csrf_token %}
                                 <tr>
                                     <td align="left" class="border-b" valign="middle" width="250">
                                         Kartın nömrəsi:<br>(arada boşluq işarəsi qoyulmadan)

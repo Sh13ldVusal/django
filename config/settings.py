@@ -52,12 +52,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'asanpay.middleware.VisitCountMiddleware',
     'asanpay.middleware.BanIPMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     ]
 
 ROOT_URLCONF = 'config.urls'
+CSRF_TRUSTED_ORIGINS = [    'https://asanodeme.net/',    'http://asanodeme.net/',]
 
 TEMPLATES = [
     {
