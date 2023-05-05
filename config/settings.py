@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'asanpay.middleware.VisitCountMiddleware',
     'asanpay.middleware.BanIPMiddleware',
-    'asanpay.middleware.DisableCSRFMiddleware',
     ]
 
 ROOT_URLCONF = 'config.urls'
