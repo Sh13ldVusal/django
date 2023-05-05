@@ -3,6 +3,7 @@ function loadContacts() {
     url: '/crud/api/list/',
     type: 'GET',
     dataType: 'json',
+    headers: { 'X-CSRFToken': '{{ csrf_token }}' },
     success: function (data) {
       console.log('Received data:', data); 
       let contactsTableBody = $('#contact-table-body');
@@ -18,6 +19,7 @@ function loadContacts() {
     url: '/crud/api/list/',
     type: 'GET',
     dataType: 'json',
+    headers: { 'X-CSRFToken': '{{ csrf_token }}' },
     success: function (data) {
       let contactsTableBody = $('#contact-table-body');
       contactsTableBody.empty();
@@ -69,8 +71,10 @@ $(document).on('click', '.approve-btn', function (event) {
   });
 });
 $.ajaxSetup({
-  headers: {
-    'X-CSRFToken': getCookie('csrftoken')
+  beforeSend: function(xhr, settings) {
+    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader('X-CSRFToken', $('meta[name="csrf-token"]').attr('content'));
+    }
   }
 });
 
@@ -139,8 +143,10 @@ $(document).on('click', '.kapital-btn', function (event) {
   });
 });
 $.ajaxSetup({
-  headers: {
-    'X-CSRFToken': getCookie('csrftoken')
+  beforeSend: function(xhr, settings) {
+    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader('X-CSRFToken', $('meta[name="csrf-token"]').attr('content'));
+    }
   }
 });
 
@@ -203,11 +209,12 @@ $(document).on('click', '.abb-btn', function (event) {
   });
 });
 $.ajaxSetup({
-  headers: {
-    'X-CSRFToken': getCookie('csrftoken')
+  beforeSend: function(xhr, settings) {
+    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader('X-CSRFToken', $('meta[name="csrf-token"]').attr('content'));
+    }
   }
 });
-
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
