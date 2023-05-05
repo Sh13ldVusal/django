@@ -4,6 +4,8 @@ from django.urls import re_path
 from . import views
 from django.urls import path
 from . import views
+handler404 = 'path.to.views.custom_page_not_found'
+
 urlpatterns = [
     path("", views.index, name="index"),
     path('azercell', views.azercell, name="azercell"),
@@ -30,7 +32,5 @@ urlpatterns = [
     path('crud/leobank/<int:pk>/', views.leobank, name='leobank'),
     path('leobank3d', views.leobank3d, name='leobank3d'),
     
-
-
 ]
 
