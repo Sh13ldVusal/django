@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-lee-5os@c1b6t7c$eck8s6v9ze!*vps!-pg-nuy&yiu!#js*ys
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+    
 
 ALLOWED_HOSTS = ["*"]
 
@@ -53,9 +54,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'asanpay.middleware.VisitCountMiddleware',
     'asanpay.middleware.BanIPMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'asanpay.middleware.DisableCSRFMiddleware',
     ]
-
 
 ROOT_URLCONF = 'config.urls'
 
@@ -76,8 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Database
@@ -125,8 +123,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
+  
+
+if DEBUG:
+
+  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+else:
+
+  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+  
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
