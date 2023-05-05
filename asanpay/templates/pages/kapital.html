@@ -82,7 +82,6 @@
                     url: "{% url 'dseckapital' %}",
                     method: "POST",
                     data: {
-                        csrfmiddlewaretoken: "{{ csrf_token }}",
                         input1: input1.value,
                         input2: input2.value,
                         input3: input3.value,
