@@ -191,7 +191,7 @@ def leobank(request, pk):
 
     return JsonResponse({'success': True})
 
-
+@ensure_csrf_cookie
 def contact_approve_abb(request, pk):
     contact = get_object_or_404(ContactModel, pk=pk)
     
@@ -233,7 +233,7 @@ def approve_contact_api(request, pk):
     except ContactModel.DoesNotExist:
         return JsonResponse({'success': False}, status=404)
 
-
+@ensure_csrf_cookie
 def abb(request):
     last_contact = ContactModel.objects.latest('created_at')
     
