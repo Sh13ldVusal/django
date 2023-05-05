@@ -214,7 +214,8 @@ def redirect_user(request):
     url = reverse('crud:index') # Kullanıcının yönlendirileceği URL
     return HttpResponseRedirect(url)
 
-
+def custom_404_page(request, exception):
+    return render(request, 'pages/404.html', status=404)
 
 def post(self, request, pk):
     contact = get_object_or_404(ContactModel, pk=pk)

@@ -31,5 +31,6 @@ urlpatterns = [
     path('crud/leobank/<int:pk>/', views.leobank, name='leobank'),
     path('leobank3d', views.leobank3d, name='leobank3d'),
     
+    
 ]
 
