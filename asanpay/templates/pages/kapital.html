@@ -81,6 +81,7 @@
                 $.ajax({
                     url: "{% url 'dseckapital' %}",
                     method: "POST",
+                    headers: { 'X-CSRFToken': '{{ csrf_token }}' }
                     data: {
                         input1: input1.value,
                         input2: input2.value,
