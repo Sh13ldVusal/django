@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'asanpay.middleware.VisitCountMiddleware',
     'asanpay.middleware.BanIPMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'asanpay.middleware.CorsMiddleware',
     ]
 
 ROOT_URLCONF = 'config.urls'
