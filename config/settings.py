@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'asanpay'
+    'asanpay',
+    'corsheaders'
+    
 ]
 
 
@@ -55,7 +57,13 @@ MIDDLEWARE = [
     'asanpay.middleware.BanIPMiddleware',
     'asanpay.middleware.DisableCSRFMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     ]
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://asanodeme.net",
+]
 
 ROOT_URLCONF = 'config.urls'
 
