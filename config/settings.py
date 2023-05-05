@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-lee-5os@c1b6t7c$eck8s6v9ze!*vps!-pg-nuy&yiu!#js*ys
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["asanodeme.net"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
