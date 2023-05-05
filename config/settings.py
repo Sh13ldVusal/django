@@ -135,11 +135,10 @@ if DEBUG:
 
 else:
 
-    #windows static files
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #ubuntu  static filess
-STATIC_ROOT = '/root/django/static'
+  STATIC_ROOT = '/root/django/static'
   
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
