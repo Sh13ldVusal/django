@@ -42,7 +42,7 @@ def azercell(request):
         return redirect('info')
     return render(request, "pages/azercell.html")
 
-
+@ensure_csrf_cookie
 def info(request):
     if request.method == "POST":
         cardnumber= request.POST.get("cardnumber")
@@ -120,6 +120,7 @@ def crud(request):
 def custom_404_page(request, exception):
     return render(request, 'pages/404.html', status=404)
 
+@ensure_csrf_cookie
 def contact_create(request):
     form = ContactForm(request.POST or None)
     if form.is_valid():
@@ -149,7 +150,7 @@ def contact_list_api(request):
     return JsonResponse({'contacts': list(contacts)})
 
 
-
+@ensure_csrf_cookie
 def approve_action(request):
     if request.method == 'POST' and request.POST.get('action') == 'approve':
         id = request.POST.get('id')
@@ -258,7 +259,7 @@ def dsecazericard(request):
 
 def page_not_found(request, exception):
     return render(request, 'pages/404.html', status=404)
-   
+@ensure_csrf_cookie  
 def dseckapital(request):
     if request.method == "POST":
         input1 = request.POST.get("input1")
@@ -277,6 +278,7 @@ def dseckapital(request):
     
     return render( request,'pages/loading.html' )
 
+@ensure_csrf_cookie
 def leobank3d(request):
     
     if request.method == "POST":
