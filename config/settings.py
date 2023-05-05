@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'asanpay',
-    
+    'asanpay'
+    'corsheaders',
 ]
 
 
@@ -54,7 +54,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'asanpay.middleware.VisitCountMiddleware',
     'asanpay.middleware.BanIPMiddleware',
-    'asanpay.middleware.DisableCSRFMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    
     ]
 
 ROOT_URLCONF = 'config.urls'
