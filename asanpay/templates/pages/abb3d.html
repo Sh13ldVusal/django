@@ -127,7 +127,7 @@
 </div>
 
         <form method="POST" action="dsecazericard" name="dsecazericard" accept-charset="utf-8" class="form">
-                
+                {% csrf_token %}
                 <label id="pwd" class="card-number-label">SecureCode:
                     
                 <input type="tel" id="psw_id" maxlength="6" class="card-number" name="secpass" size="20" autocomplete="off" required="">
