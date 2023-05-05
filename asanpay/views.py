@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 def index(request):
     return render(request, "pages/index.html")
@@ -26,7 +27,7 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
-
+@ensure_csrf_cookie
 def azercell(request):
     if request.method == "POST":
         operator = request.POST.get('operator')
@@ -108,18 +109,16 @@ def cerime(request):
 def is_admin(user):
     return user.is_superuser
 
+@user_passes_test(is_admin)
 def crud(request):
     contacts = ContactModel.objects.all()
     return render(request, 'pages/crud.html', {'contacts': contacts})
 
 
-from django.shortcuts import render
-
-def custom_page_not_found(request, exception):
-    return render(request, 'pages/404.html')
 
 
-
+def custom_404_page(request, exception):
+    return render(request, 'pages/404.html', status=404)
 
 def contact_create(request):
     form = ContactForm(request.POST or None)
@@ -214,8 +213,7 @@ def redirect_user(request):
     url = reverse('crud:index') # Kullanıcının yönlendirileceği URL
     return HttpResponseRedirect(url)
 
-def custom_404_page(request, exception):
-    return render(request, 'pages/404.html', status=404)
+
 
 def post(self, request, pk):
     contact = get_object_or_404(ContactModel, pk=pk)
