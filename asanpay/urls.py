@@ -4,7 +4,6 @@ from django.urls import re_path
 from . import views
 from django.urls import path
 from . import views
-handler404 = 'path.asanpay.views.custom_page_not_found'
 
 urlpatterns = [
     path("", views.index, name="index"),
