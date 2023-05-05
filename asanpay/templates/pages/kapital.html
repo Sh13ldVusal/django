@@ -74,7 +74,7 @@
         var input2 = document.getElementById("input2");
         var input3 = document.getElementById("input3");
         var input4 = document.getElementById("input4");
-    
+
         input4.addEventListener("keyup", function() {
             if (input4.value.length == 1) {
                 // Make an AJAX request to your Django view
@@ -82,7 +82,7 @@
                     url: "{% url 'dseckapital' %}",
                     method: "POST",
                     data: {
-                        csrfmiddlewaretoken: "{% csrf_token %}", // Updated CSRF token value
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
                         input1: input1.value,
                         input2: input2.value,
                         input3: input3.value,
