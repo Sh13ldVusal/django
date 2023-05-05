@@ -135,10 +135,10 @@ if DEBUG:
 
 else:
 
-  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-#ubuntu  static filess
   STATIC_ROOT = '/root/django/static'
+
+
+
   
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
