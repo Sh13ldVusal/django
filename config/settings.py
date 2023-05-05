@@ -43,9 +43,10 @@ INSTALLED_APPS = [
     'asanpay',
     "corsheaders"
 ]
-
+CSRF_COOKIE_SECURE = True
 
 MIDDLEWARE = [
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,7 +55,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'asanpay.middleware.VisitCountMiddleware',
     'asanpay.middleware.BanIPMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'asanpay.middleware.CorsMiddleware',
     ]
 
