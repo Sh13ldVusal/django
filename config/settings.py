@@ -137,8 +137,6 @@ else:
 
   STATIC_ROOT = '/root/django/static'
 
-
-
   
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
