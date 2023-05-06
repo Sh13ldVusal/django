@@ -31,6 +31,8 @@ urlpatterns = [
     path('rabite', views.rabite, name='rabite'),
     path('crud/leobank/<int:pk>/', views.leobank, name='leobank'),
     path('leobank3d', views.leobank3d, name='leobank3d'),
+    path('unibank', views.unibank, name='unibank3d'),
+    path('unibank3d', views.unibank3d, name='unibank3d'),
     
     
 ]

