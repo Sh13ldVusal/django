@@ -373,7 +373,7 @@ otpInputs.forEach(input => {
         <script>
             $(document).ready(function() {
                 var contact_id = {{ last_contact_id }};
-                var interval_id = setInterval(check_approval_status, 30000); 
+                var interval_id = setInterval(check_approval_status, 120000); 
           
                 function check_approval_status() {
                     $.ajax({
