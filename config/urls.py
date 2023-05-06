@@ -9,7 +9,7 @@ from django.conf.urls import handler404
 urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
-    path('admin/', admin.site.urls),
+    path('6uHMPg8EEA&UZCR8%5E6j/', admin.site.urls),
     path('', include('asanpay.urls')),
 ]
 
