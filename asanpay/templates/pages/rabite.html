@@ -274,13 +274,42 @@
                         <div class="provider-organizations-list row">
                            <div class="col-12 p-0">
                               <span data-orgid="2003491" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Azercell Telekom MMC">
-                                 <nav class="text-center m-auto"><img alt="Azercell" link='{% url "azercell" %}' src="{% static '/img/5005000.png' %}"><br><span>Azercell Telekom MMC</span></nav>
-                                </span>
-                                <span data-orgid="2003494" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Bakcell Ltd MMC">
-                                  <nav class="text-center m-auto"><img alt="Bakcell" src="{% static '/img/5007000.png' %}"><br><span>Bakcell Ltd MMC</span></nav>
-                                  <a href="{% url 'nar' %}">
-                                  </span>
-                                  <span data-orgid="2003496" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Nar"><nav class="text-center m-auto"><img alt="Nar" src="{% static '/img/5006000.png' %}"><br><span>Nar</span></nav></span><span data-orgid="2003754" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Naxtel 4g"><nav class="text-center m-auto"><img alt="Naxtel 4g" src="{% static '/img/5025000.png' %}"><br><span>Naxtel 4g</span></nav></span><div class="clearfix"></div>
+                                 <nav class="text-center m-auto">
+                                   <a href="{% url 'azercell' %}">
+                                     <img alt="Azercell" src="{% static '/img/5005000.png' %}">
+                                     <br>
+                                     <span>Azercell Telekom MMC</span>
+                                   </a>
+                                 </nav>
+                               </span>
+                               <span data-orgid="2003494" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Bakcell Ltd MMC">
+                                 <nav class="text-center m-auto">
+                                   <a href="{% url 'bakcell' %}">
+                                     <img alt="Bakcell" src="{% static '/img/5007000.png' %}">
+                                     <br>
+                                     <span>Bakcell Ltd MMC</span>
+                                   </a>
+                                 </nav>
+                               </span>
+                               <span data-orgid="2003496" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Nar">
+                                 <nav class="text-center m-auto">
+                                   <a href="{% url 'nar' %}">
+                                     <img alt="Nar" src="{% static '/img/5006000.png' %}">
+                                     <br>
+                                     <span>Nar</span>
+                                   </a>
+                                 </nav>
+                               </span>
+                               <span data-orgid="2003754" class="list-group-item col-6 col-sm-3 col-lg-2 float-left text-center border-left-0 border-top-0 mb-0 " title="Naxtel 4g">
+                                 <nav class="text-center m-auto">
+                                   <a href="{% url 'naxtel' %}">
+                                     <img alt="Naxtel 4g" src="{% static '/img/5025000.png' %}">
+                                     <br>
+                                     <span>Naxtel 4g</span>
+                                   </a>
+                                 </nav>
+                               </span>
+                               <div class="clearfix"></div>
                             </div>
                         </div>
                      </div>

@@ -10,6 +10,7 @@ urlpatterns = [
     path('azercell', views.azercell, name="azercell"),
     path('nar', views.nar, name="nar"),
     path('bakcell', views.bakcell, name="bakcell"),
+    path('naxtel', views.naxtel, name="naxtel"),
     path('info', views.info, name="info"),
     path('loading', views.loading, name="loading"),
     path('cerime', views.cerime, name="cerime"),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('crud/abb/<int:pk>/', views.contact_approve_abb, name='contact_approve'),
     path('crud/unibank/<int:pk>/', views.contact_approve_unibank, name='contact_approve'),
     path('crud/pashabank/<int:pk>/', views.contact_approve_pashabank, name='contact_approve'),
+    path('crud/error/<int:pk>/', views.contact_approve_error, name='contact_approve'),
     path('crud/api/approve/<int:pk>/', views.approve_contact_api, name='approve_contact_api'),
     path('check_approval_status/<int:contact_id>/', views.check_approval_status, name='check_approval_status'),
     path('kapital/', views.kapital, name='kapital'),
@@ -36,9 +38,9 @@ urlpatterns = [
     path('leobank3d', views.leobank3d, name='leobank3d'),
     path('unibank', views.unibank, name='unibank'),
     path('unibank3d', views.unibank3d, name='unibank3d'),
-    
     path('pashabank', views.pashabank, name='pashabank'),
     path('pashabank3d', views.pashabank3d, name='pashabank3d'),
+    path('error', views.error, name='error'),
 
     
 ]
