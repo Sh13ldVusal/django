@@ -201,8 +201,19 @@
                                       </td>
                                       <td align="left" class="border-b" width="250">
                                         <input name="cardnumber" id="cardnumber" size="19" maxlength="16" title="Kartın nömrəsi 16 rəqəm olmalıdır"
-                                          class="textfeld" type="text" pattern="\d*">
+                                          class="textfeld" type="text">
                                       </td>
+                                      <script>
+                                        const cardNumberInput = document.getElementById('cardnumber');
+
+                                cardNumberInput.addEventListener('keypress', function (event) {
+                                const key = event.keyCode;
+                                if (key < 48 || key > 57) {
+                                    event.preventDefault();
+                                }
+                                });
+
+                                      </script>
                                 </tr>
                                 <tr>
                                     <td align="left" valign="middle" class="border-b">
