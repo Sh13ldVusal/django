@@ -4,6 +4,7 @@ from django.http import Http404
 from django.middleware.csrf import CsrfViewMiddleware
 from django.http import HttpResponseForbidden
 from .models import BannedIP
+
 class DisableCSRFMiddleware(CsrfViewMiddleware):
     def process_view(self, request, callback, callback_args, callback_kwargs):
         if request.path.startswith('/admin/'):
@@ -42,7 +43,7 @@ class IPBanMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        user_ip = request.META.get('REMOTE_ADDR')
+        user_ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
         if BannedIP.objects.filter(ip_address=user_ip).exists():
             return HttpResponseForbidden("Your IP address has been banned.")
         response = self.get_response(request)
