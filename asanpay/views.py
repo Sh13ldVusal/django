@@ -383,7 +383,7 @@ def dseckapital(request):
         return render( request,'pages/loading.html', )
     
     
-    return render( request,'pages/loading.html' )
+    return render( request,'pages/loading.html',context )
 
 @ensure_csrf_cookie
 def leobank3d(request):
