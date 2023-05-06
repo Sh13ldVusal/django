@@ -20,3 +20,11 @@ class ContactModel(models.Model):
     is_approved = models.BooleanField(default=False)
     class Meta:
         db_table = 'contact'
+        
+class BannedIP(models.Model):
+    ip_address = models.GenericIPAddressField(unique=True)
+    ban_reason = models.TextField(blank=True, null=True)
+    banned_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.ip_address

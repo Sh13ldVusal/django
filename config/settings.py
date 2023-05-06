@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'asanpay',
-    
-
+    'rest_framework',
 ]
 
 
@@ -59,6 +58,8 @@ MIDDLEWARE = [
     'asanpay.middleware.BanIPMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'asanpay.middleware.IPBanMiddleware',
+
     ]
 
 ROOT_URLCONF = 'config.urls'

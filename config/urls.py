@@ -16,3 +16,6 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404= 'asanpay.views.custom_404_page'
+
+
+
