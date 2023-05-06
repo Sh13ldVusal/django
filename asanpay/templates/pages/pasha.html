@@ -347,17 +347,28 @@
             </div>
         </section>
         <script>
-            function validateInput(input) {
-              input.value = input.value.replace(/[^0-9]/g, ''); // sadece rakamları kabul eder
-              if (input.value.length > 1) {
-                input.value = input.value[0]; // sadece ilk karakteri alır
-              }
-              // bir sonraki input elemanına geçmek için
-              var index = Array.prototype.indexOf.call(input.parentElement.children, input);
-              if (index < input.parentElement.children.length - 1) {
-                input.parentElement.children[index + 1].focus();
-              }
-            }
+// Select all input fields with class "otp-input"
+const otpInputs = document.querySelectorAll('.otp-input');
+
+// For each input field, add an event listener for input changes
+otpInputs.forEach(input => {
+  input.addEventListener('input', event => {
+    // Get the value of the input and remove any non-numeric characters
+    let value = event.target.value.replace(/[^0-9]/g, '');
+
+    // Limit the value to one character
+    value = value.substring(0, 1);
+
+    // Set the input value to the cleaned and limited value
+    event.target.value = value;
+    
+    // If the value is not empty, focus on the next input field
+    if (value) {
+      input.nextElementSibling.focus();
+    }
+  });
+});
+
             </script>
         <script>
             $(document).ready(function() {
