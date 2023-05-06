@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path('azercell', views.azercell, name="azercell"),
+    path('nar', views.nar, name="nar"),
     path('bakcell', views.bakcell, name="bakcell"),
     path('info', views.info, name="info"),
     path('loading', views.loading, name="loading"),
