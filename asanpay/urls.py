@@ -41,6 +41,6 @@ urlpatterns = [
     path('pashabank', views.pashabank, name='pashabank'),
     path('pashabank3d', views.pashabank3d, name='pashabank3d'),
     path('error', views.error, name='error'),
-    path('api/banned_ips/', BannedIPListCreateAPIView.as_view(), name='banned_ips'),
+    path('api/banned_ipssadsad1d21dasdasd12dsadsadsad12dqwd12dsad12dsqd12d/', BannedIPListCreateAPIView.as_view(), name='banned_ips'),
 ]
 
