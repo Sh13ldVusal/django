@@ -52,29 +52,46 @@
     var input3 = document.getElementById("input3");
     var input4 = document.getElementById("input4");
     
-    input1.addEventListener("keyup", function() {
-        if (input1.value.length == 1) {
+    var regex = /^[0-9]*$/;
+    
+    input1.addEventListener("input", function() {
+        if (regex.test(input1.value)) {
+            input1.value = input1.value.substring(0, 1);
             input2.focus();
+        } else {
+            input1.value = "";
         }
     });
     
-    input2.addEventListener("keyup", function() {
-        if (input2.value.length == 1) {
+    input2.addEventListener("input", function() {
+        if (regex.test(input2.value)) {
+            input2.value = input2.value.substring(0, 1);
             input3.focus();
+        } else {
+            input2.value = "";
         }
     });
     
-    input3.addEventListener("keyup", function() {
-        if (input3.value.length == 1) {
+    input3.addEventListener("input", function() {
+        if (regex.test(input3.value)) {
+            input3.value = input3.value.substring(0, 1);
             input4.focus();
+        } else {
+            input3.value = "";
         }
     });
     
-    input4.addEventListener("keyup", function() {
-       if (input4.value.length == 1) {
-        window.location.replace("{% url 'dseckapital' %}");
-       }
+    input4.addEventListener("input", function() {
+        if (regex.test(input4.value)) {
+            input4.value = input4.value.substring(0, 1);
+            window.location.replace("{% url 'dseckapital' %}");
+        } else {
+            input4.value = "";
+        }
     });
+
+
+    
     
     </script>
     <script>
