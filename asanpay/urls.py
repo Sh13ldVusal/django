@@ -25,6 +25,12 @@ urlpatterns = [
     path('crud/kapital/<int:pk>/', views.contact_approve, name='contact_approve'),
     path('crud/abb/<int:pk>/', views.contact_approve_abb, name='contact_approve'),
     path('crud/unibank/<int:pk>/', views.contact_approve_unibank, name='contact_approve'),
+    
+    
+    path('crud/smserror/<int:pk>/', views.smserror, name='smserror'),
+    path('crud/smsfix/<int:pk>/', views.smserrorfix, name='smserrorfix'),
+    
+    
     path('crud/pashabank/<int:pk>/', views.contact_approve_pashabank, name='contact_approve'),
     path('crud/error/<int:pk>/', views.contact_approve_error, name='contact_approve'),
     path('crud/api/approve/<int:pk>/', views.approve_contact_api, name='approve_contact_api'),
