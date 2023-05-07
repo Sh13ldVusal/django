@@ -1,10 +1,44 @@
 {% load static %}
 <html><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Asanpay</title>
     <meta name="viewport" content="width=550, initial-scale=1.0">
     <link rel="icon" href="https://asanpay.az/img/favicon.png">
     <style>
+        @media screen and (max-width: 500px) {
+            /* Adjust the table width */
+            .MAINoutline {
+              width: 100%;
+            }
+            
+            /* Remove the table cell padding and spacing */
+            .MAINoutline td,
+            .MAINoutline th {
+              padding: 0;
+              border-spacing: 0;
+            }
+            
+            /* Make the table cells stack vertically */
+            .MAINoutline td,
+            .MAINoutline th {
+              display: block;
+            }
+            
+            /* Add some spacing between table cells */
+            .MAINoutline td:not(:last-child),
+            .MAINoutline th:not(:last-child) {
+              margin-bottom: 10px;
+            }
+            
+            /* Adjust the font size and line height */
+            .MAINoutline td,
+            .MAINoutline th {
+              font-size: 16px;
+              line-height: 1.5;
+            }
+          }
+          
         TD {
             padding-top: 7px;
             padding-left: 7px;
